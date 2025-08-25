@@ -1,37 +1,40 @@
-`timescale 1ns/1ps
+`timescale 1ns/1ps         // Define la escala de tiempo para la simulaci贸n:
+                           // unidad de tiempo = 1 ns, precisi贸n = 1 ps.
 
-module FA_estructural_tb;
+module FA_estructural_tb;  // Declaraci贸n del testbench (no tiene entradas/salidas externas).
 
-    reg a;
-    reg b;
-    reg c;
-    wire y0;
-    wire y1;
+    reg a;                 // Se帽al de prueba para la entrada 'a' del DUT (Device Under Test).
+    reg b;                 // Se帽al de prueba para la entrada 'b'.
+    reg c;                 // Se帽al de prueba para la entrada 'c'.
+    wire y0;               // Se帽al de salida conectada al DUT: bit de suma.
+    wire y1;               // Se帽al de salida conectada al DUT: bit de acarreo.
 
-    // Instanciaci髇 del m骴ulo sumador completo
-    FA_estructural fa1 (
-        .a(a),
-        .b(b),
-        .c(c),
-        .y0(y0),
-        .y1(y1)
+    // Instanciaci贸n del m贸dulo sumador completo (Device Under Test).
+    FA_estructural fa1 (   // Creamos una instancia llamada "fa1".
+        .a(a),             // Conecta la se帽al 'a' del testbench a la entrada 'a' del DUT.
+        .b(b),             // Conecta 'b'.
+        .c(c),             // Conecta 'c'.
+        .y0(y0),           // Conecta la salida de suma 'y0'.
+        .y1(y1)            // Conecta la salida de acarreo 'y1'.
     );
 
-    initial begin
-        // Condiciones iniciales
-        a = 0; b = 0; c = 0;
+    initial begin          // Bloque inicial que define los est铆mulos de prueba.
 
-        // Todas las combinaciones posibles
-        #10 a = 0; b = 0; c = 0;
-        #10 a = 0; b = 0; c = 1;
-        #10 a = 0; b = 1; c = 0;
-        #10 a = 0; b = 1; c = 1;
-        #10 a = 1; b = 0; c = 0;
-        #10 a = 1; b = 0; c = 1;
-        #10 a = 1; b = 1; c = 0;
-        #10 a = 1; b = 1; c = 1;   
-		#10
-		$finish;
+        // Condiciones iniciales
+        a = 0; b = 0; c = 0;   // Todas las entradas comienzan en 0.
+
+        // Aplicaci贸n de todas las combinaciones posibles de entradas
+        #10 a = 0; b = 0; c = 0;  // Tiempo 10 ns: caso (0,0,0).
+        #10 a = 0; b = 0; c = 1;  // Tiempo 20 ns: caso (0,0,1).
+        #10 a = 0; b = 1; c = 0;  // Tiempo 30 ns: caso (0,1,0).
+        #10 a = 0; b = 1; c = 1;  // Tiempo 40 ns: caso (0,1,1).
+        #10 a = 1; b = 0; c = 0;  // Tiempo 50 ns: caso (1,0,0).
+        #10 a = 1; b = 0; c = 1;  // Tiempo 60 ns: caso (1,0,1).
+        #10 a = 1; b = 1; c = 0;  // Tiempo 70 ns: caso (1,1,0).
+        #10 a = 1; b = 1; c = 1;  // Tiempo 80 ns: caso (1,1,1).
+
+        #10                   // Espera adicional de 10 ns (tiempo 90 ns).
+        $finish;              // Termina la simulaci贸n.
     end
 
-endmodule
+endmodule                  // Fin del testbench.
